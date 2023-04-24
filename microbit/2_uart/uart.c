@@ -6,13 +6,16 @@
 void uart_init(){
 
     // UART
-    GPIO0->PIN_CNF[6] = 0;  // UART_INT_RX
-    GPIO1->PIN_CNF[8] = 1;  // UART_INT_TX
+    GPIO0->PIN_CNF[6] = 1;  // UART_INT_RX
+    GPIO0->PIN_CNF[8] = 0;  // UART_INT_TX
 
-    UART->PSEL_RXD = 6; //0x6
+    GPIO1->PIN_CNF[8] = 0;
+    GPIO0->PIN_CNF[29] = 1;
 
-    UART->PSEL_TXD = (1 << 5);  // Sets pin number to 8 for TXD, and sets port to 1, and that it's connected
-    UART->PSEL_TXD |= 8;  //0x28
+    UART->PSEL_TXD = 6; //0x6
+
+    UART->PSEL_RXD = (1 << 5);  // Sets pin number to 8 for TXD, and sets port to 1, and that it's connected
+    UART->PSEL_RXD |= 8;  //0x28
 
     UART->PSEL_CTS |= (1 << 31);  // Sets CTS to disconnected
     UART->PSEL_RTS |= (1 << 31);  // Sets RTS to disconnected
